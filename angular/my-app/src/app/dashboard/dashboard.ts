@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { Dashboard } from '../services/dashboard';
+import { Component, inject, Injectable, OnInit } from '@angular/core';
+import { DashboardService } from '../services/dashboard';
 import { DashboardStats } from '../models/dashboard-stats';
 import { BaseChartDirective } from 'ng2-charts';
 import {
@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 
 
+
 Chart.register(
   LineElement, PointElement, LineController,
   BarElement, BarController,
@@ -22,6 +23,7 @@ Chart.register(
 
 );
 
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -29,28 +31,28 @@ Chart.register(
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class DashboardComponent {
-  private dashboardService = inject(Dashboard);
+export class DashboardComponent implements OnInit {
+  private dashboardService = inject(DashboardService);
 
   stats?: DashboardStats;
   loading = true;
   errorMessage = '';
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadStats();
   }
 
-  loadStats() {
+  loadStats(): void {
     this.loading = true;
     this.errorMessage = '';
 
-    this.dashboardService.getStat().subscribe({
+    this.dashboardService.getStats().subscribe({
       next: (data) => {
         this.stats = data;
         this.loading = false;
       },
       error: () => {
-        this.errorMessage = 'Impossible de charger les statistiques.';
+        this.errorMessage = 'Impossible de charger les données du dashboard.';
         this.loading = false;
       }
     });

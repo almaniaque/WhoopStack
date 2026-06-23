@@ -1,10 +1,17 @@
 export interface DashboardStats {
-    totalClients: number;
-    totalDevis: number;
-    devisAcceptes: number;
-    devisRefuses: number;
-    devisEnAttente: number;
-    montantTotal: number;
-    montantAccepte: number;
-    montantPotentiel: number;
+    chiffreAffaires: number;
+    devisEmis: number;
+    tauxConversion: number;
+    delaiMoyenReponse: number;
+
+    evolutionChiffreAffaires: number;
+    evolutionDevis: number;
+    evolutionConversion: number;
+    evolutionDelai: number;
+
+    acceptes: number;
+    enAttente: number;
+    enCours: number;
+    annules: number;
+    refuses: number;
 }

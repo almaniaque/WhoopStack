@@ -7,13 +7,12 @@ import { DashboardStats } from '../models/dashboard-stats';
 @Injectable({
     providedIn: 'root'
 })
-
-export class Dashboard {
+export class DashboardService {
     private http = inject(HttpClient);
 
     private apiUrl = 'http://localhost:8080/api/dashboard/stats';
 
-    getStat() {
-        return this.http.get<DashboardStats>(this.apiUrl)
+    getStats() {
+        return this.http.get<DashboardStats>(this.apiUrl);
     }
 }

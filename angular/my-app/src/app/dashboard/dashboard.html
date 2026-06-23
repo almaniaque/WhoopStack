@@ -6,8 +6,14 @@
             <section class="card shadow-sm border-0 h-100">
                 <section class="card-body">
                     <h5 class="dashboard-card-title">Chiffre d'affaires</h5>
-                    <h2 class="dashboard-value"></h2>
-                    <p class="text-ws-success mb-0"></p>
+
+                    <h2 class="dashboard-value">
+                        {{ stats?.chiffreAffaires }} €
+                    </h2>
+
+                    <p class="text-ws-success mb-0">
+                        {{ stats?.evolutionChiffreAffaires }}% vs mois dernier
+                    </p>
                 </section>
             </section>
         </article>
@@ -16,8 +22,14 @@
             <section class="card shadow-sm border-0 h-100">
                 <section class="card-body">
                     <h5 class="dashboard-card-title">Devis émis</h5>
-                    <h2 class="dashboard-value"></h2>
-                    <p class="text-ws-success mb-0"></p>
+
+                    <h2 class="dashboard-value">
+                        {{ stats?.devisEmis }}
+                    </h2>
+
+                    <p class="text-ws-success mb-0">
+                        {{ stats?.evolutionDevis }}% vs mois dernier
+                    </p>
                 </section>
             </section>
         </article>
@@ -26,8 +38,14 @@
             <section class="card shadow-sm border-0 h-100">
                 <section class="card-body">
                     <h5 class="dashboard-card-title">Taux de conversion</h5>
-                    <h2 class="dashboard-value"></h2>
-                    <p class="text-ws-success mb-0"></p>
+
+                    <h2 class="dashboard-value">
+                        {{ stats?.tauxConversion }}%
+                    </h2>
+
+                    <p class="text-ws-success mb-0">
+                        {{ stats?.evolutionConversion }}% vs mois dernier
+                    </p>
                 </section>
             </section>
         </article>
@@ -36,8 +54,14 @@
             <section class="card shadow-sm border-0 h-100">
                 <section class="card-body">
                     <h5 class="dashboard-card-title">Délai moyen de réponse</h5>
-                    <h2 class="dashboard-value"></h2>
-                    <p class="text-ws-success mb-0"></p>
+
+                    <h2 class="dashboard-value">
+                        {{ stats?.delaiMoyenReponse }} jours
+                    </h2>
+
+                    <p class="text-ws-success mb-0">
+                        {{ stats?.evolutionDelai }}% vs mois dernier
+                    </p>
                 </section>
             </section>
         </article>
