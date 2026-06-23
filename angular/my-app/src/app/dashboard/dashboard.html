@@ -1,0 +1,242 @@
+<nav class="shadow-sm sticky-top ">
+    <section class="container-fluid align-items-center d-flex justify-content-between dashboard-navbar">
+
+        <header class=" navbar d-flex align-items-center gap-3 ">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Ouvrir le menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <figure class="d-flex align-items-center gap-2 mb-0">
+                <img src="image/WhoopStackLogo.png" alt="Logo WhoopStack" class="nav-icon">
+                <img src="image/WhoopStackText.png" alt="WhoopStack" class="nav-text">
+            </figure>
+        </header>
+
+        <header>
+            <h1 class="h4 mb-0 dashboard-title">Dashboard</h1>
+            <p class="text-muted mb-0 dashboard-subtitle">Synthèse - Juin 2026</p>
+        </header>
+
+        <aside class="offcanvas offcanvas-start sidebar-preview" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
+
+
+            <header class="offcanvas-header align-items-start">
+                <section>
+                    <figure class="d-flex align-items-center gap-1 mb-0">
+                        <img src="image/WhoopStackLogo.png" alt="Logo WhoopStack" class="off-icon">
+                        <img src="image/WhoopStackText.png" alt="WhoopStack" class="off-text">
+                    </figure>
+
+                </section>
+                <button type="button" class="btn-close ms-auto mt-0" data-bs-dismiss="offcanvas" aria-label="Fermer">
+                </button>
+
+            </header>
+
+            <hr>
+
+            <section class="offcanvas-body dashboard-text">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" routerLink="/dashboard">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/devis">
+                            Devis
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/clients">
+                            Clients
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <button class="nav-link dropdown-toggle btn btn-link text-start" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Options
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" routerLink="/profil">Profil</a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" routerLink="/settings">Paramètres</a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item text-danger" routerLink="/logout">
+                                    Déconnexion
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </section>
+        </aside>
+
+    </section>
+</nav>
+
+<main class="container py-5 dashboard-page">
+
+    <section class="row g-3">
+
+        <article class="col-12 col-md-6 col-xl-3">
+            <section class="card shadow-sm border-0 h-100">
+                <section class="card-body">
+                    <h5 class="dashboard-card-title">Chiffre d'affaires</h5>
+                    <h2 class="dashboard-value"></h2>
+                    <p class="text-ws-success mb-0"></p>
+                </section>
+            </section>
+        </article>
+
+        <article class="col-12 col-md-6 col-xl-3">
+            <section class="card shadow-sm border-0 h-100">
+                <section class="card-body">
+                    <h5 class="dashboard-card-title">Devis émis</h5>
+                    <h2 class="dashboard-value"></h2>
+                    <p class="text-ws-success mb-0"></p>
+                </section>
+            </section>
+        </article>
+
+        <article class="col-12 col-md-6 col-xl-3">
+            <section class="card shadow-sm border-0 h-100">
+                <section class="card-body">
+                    <h5 class="dashboard-card-title">Taux de conversion</h5>
+                    <h2 class="dashboard-value"></h2>
+                    <p class="text-ws-success mb-0"></p>
+                </section>
+            </section>
+        </article>
+
+        <article class="col-12 col-md-6 col-xl-3">
+            <section class="card shadow-sm border-0 h-100">
+                <section class="card-body">
+                    <h5 class="dashboard-card-title">Délai moyen de réponse</h5>
+                    <h2 class="dashboard-value"></h2>
+                    <p class="text-ws-success mb-0"></p>
+                </section>
+            </section>
+        </article>
+
+    </section>
+
+    <section class="row g-3 mt-1">
+
+        <article class="col-12 col-xl-8">
+            <section class="card shadow-sm border-0 h-100">
+                <section class="card-body">
+                    <h5 class="card-title">Évolution du CA</h5>
+                    <p class="card-text text-muted">6 derniers mois</p>
+
+                    <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" type="line">
+                    </canvas>
+                </section>
+            </section>
+        </article>
+
+        <article class="col-12 col-xl-4">
+            <section class="card shadow-sm border-0 h-100">
+                <section class="card-body d-flex flex-column">
+                    <h5 class="card-title">Devis / mois</h5>
+                    <p class="card-text text-muted">Volume mensuel</p>
+                    <div style="flex: 1; min-height: 0; position: relative;">
+                        <canvas baseChart [data]="barChartData" [options]="barChartOptions" type="bar">
+                        </canvas>
+                    </div>
+                </section>
+            </section>
+        </article>
+
+    </section>
+
+    <section class="row g-3 mt-1">
+
+        <article class="col-12 col-xl-4">
+            <section class="card shadow-sm border-0 h-100">
+                <section class="card-body">
+                    <h5 class="card-title">Répartition des statuts</h5>
+
+                    <section class="position-relative d-flex justify-content-center align-items-center">
+                        <canvas baseChart [data]="doughnutChartData" [options]="doughnutChartOptions"
+                            [plugins]="doughnutPlugins" type="doughnut">
+                        </canvas>
+                        <article class="donut-center-label">
+                            <aside class="dashboard-value">{{ totalDevis }}</aside>
+                            <aside class="dashboard-card-title">devis</aside>
+                        </article>
+                    </section>
+
+                </section>
+            </section>
+        </article>
+
+        <article class="col-12 col-xl-8">
+            <section class="card shadow-sm border-0 h-100">
+                <section class="card-body">
+                    <h5 class="card-title">Derniers devis</h5>
+
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Montant</th>
+                                <th>Date</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <span></span>
+                                </td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <span></span>
+                                </td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <span></span>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </section>
+            </section>
+        </article>
+
+    </section>
+
+</main>
