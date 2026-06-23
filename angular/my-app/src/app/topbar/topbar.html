@@ -1,0 +1,92 @@
+<nav class="shadow-sm sticky-top ">
+    <section class="container-fluid align-items-center d-flex justify-content-between dashboard-navbar">
+
+        <header class="text-light navbar d-flex align-items-center gap-3 ">
+            <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Ouvrir le menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <article>
+                <h1 class=" h4 mb-0 dashboard-title">Dashboard</h1>
+                <p class=" mb-0 dashboard-subtitle">Synthèse - Juin 2026</p>
+            </article>
+        </header>
+        <header>
+            <figure class="d-flex align-items-center gap-2 mb-0">
+                <img src="image/WhoopStackText.png" alt="WhoopStack" class="nav-text">
+            </figure>
+        </header>
+
+        <aside class="offcanvas offcanvas-start sidebar-preview" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
+
+
+            <header class="offcanvas-header align-items-start">
+                <section>
+                    <figure class="d-flex align-items-center gap-1 mb-0">
+                        <img src="image/WhoopStackLogo.png" alt="Logo WhoopStack" class="off-icon">
+                        <img src="image/WhoopStackText.png" alt="WhoopStack" class="off-text">
+                    </figure>
+
+                </section>
+                <button type="button" class="btn-close ms-auto mt-0" data-bs-dismiss="offcanvas" aria-label="Fermer">
+                </button>
+
+            </header>
+
+            <hr>
+
+            <section class="offcanvas-body dashboard-text">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" routerLink="/dashboard">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/devis">
+                            Devis
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/clients">
+                            Clients
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <button class="nav-link dropdown-toggle btn btn-link text-start" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Options
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" routerLink="/profil">Profil</a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" routerLink="/settings">Paramètres</a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item text-danger" routerLink="/logout">
+                                    Déconnexion
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </section>
+        </aside>
+
+    </section>
+</nav>

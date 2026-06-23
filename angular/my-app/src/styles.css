@@ -11,11 +11,12 @@
     --ws-bg: #f5f3fb;
     --ws-sidebar-bg: #160b55;
     --ws-card-bg: #ffffff;
-    --ws-nav-bg: #928cc7;
+    --ws-nav-bg: #2a1f77;
+
     /* Texte */
     --ws-text: #15102f;
     --ws-text-light: #ffffff;
-    --ws-muted: #8b84ad;
+    --ws-muted: #ada5d4;
 
     /* Bordures */
     --ws-border: #ddd8f0;
