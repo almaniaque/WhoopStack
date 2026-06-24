@@ -1,92 +1,69 @@
-<nav class="shadow-sm sticky-top ">
-    <section class="container-fluid align-items-center d-flex justify-content-between dashboard-navbar">
+<!-- Bouton toggle, toujours visible -->
+<button class="btn btn-sidebar-toggle m-2" type="button" (click)="toggle()">
+    <i class="bi bi-list fs-4"></i>
+</button>
 
-        <header class="text-light navbar d-flex align-items-center gap-3 ">
-            <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar" aria-label="Ouvrir le menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <article>
-                <h1 class=" h4 mb-0 dashboard-title">Dashboard</h1>
-                <p class=" mb-0 dashboard-subtitle">Synthèse - Juin 2026</p>
-            </article>
-        </header>
-        <header>
-            <figure class="d-flex align-items-center gap-2 mb-0">
-                <img src="image/WhoopStackText.png" alt="WhoopStack" class="nav-text">
-            </figure>
-        </header>
+<!-- Sidebar -->
+<div class="sidebar" [class.sidebar-closed]="!isOpen()">
+    <div class="d-flex flex-column h-100">
+        <!-- Logo -->
+        <div class="sidebar-logo d-flex flex-column align-items-center p-1">
+            <img src="image/WhoopStackLogo.png" alt="WhoopStack" class="logo-image">
+            <img src="image/WhoopStackText.png" alt="WhoopStack" class="logo-text">
+        </div>
+        <hr>
+        <!-- Navigation -->
+        <div class="px-3 mt-3">
+            <div class="nav-section-title">NAVIGATION</div>
+            <nav class="nav flex-column gap-1 mt-2">
+                <a class="nav-link" routerLink="/accueil" routerLinkActive="active">
+                    <i class="bi bi-house"></i> Accueil
+                </a>
+                <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+                    <i class="bi bi-grid"></i> Tableau de bord
+                </a>
+                <a class="nav-link" routerLink="/devis" routerLinkActive="active">
+                    <i class="bi bi-file-text"></i> Devis
+                </a>
+                <a class="nav-link" routerLink="/clients" routerLinkActive="active">
+                    <i class="bi bi-people"></i> Clients
+                </a>
+            </nav>
+        </div>
 
-        <aside class="offcanvas offcanvas-start sidebar-preview" tabindex="-1" id="offcanvasNavbar"
-            aria-labelledby="offcanvasNavbarLabel">
+        <!-- Bas de sidebar -->
+        <div class="mt-auto">
+            <div class="px-3 py-2">
+                <a class="nav-link" routerLink="/parametres">
+                    <i class="bi bi-gear"></i> Paramètres
+                </a>
+            </div>
+            <div class="user-profile d-flex align-items-center gap-2 p-3">
+                <div class="avatar">LD</div>
+                <div>
+                    <div class="user-name">Laurent Dumas</div>
+                    <div class="user-role">Admin</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ↑ .sidebar se ferme ICI maintenant -->
 
+<!-- Topbar : maintenant en dehors de .sidebar -->
+<nav class="topbar d-flex justify-content-between align-items-center px-4 py-3" [class.topbar-expanded]="!isOpen()">
+    <div>
+        <h1 class="topbar-title mb-0">Accueil</h1>
+        <p class="topbar-subtitle mb-0">Bienvenue sur WhoopStack</p>
+    </div>
 
-            <header class="offcanvas-header align-items-start">
-                <section>
-                    <figure class="d-flex align-items-center gap-1 mb-0">
-                        <img src="image/WhoopStackLogo.png" alt="Logo WhoopStack" class="off-icon">
-                        <img src="image/WhoopStackText.png" alt="WhoopStack" class="off-text">
-                    </figure>
-
-                </section>
-                <button type="button" class="btn-close ms-auto mt-0" data-bs-dismiss="offcanvas" aria-label="Fermer">
-                </button>
-
-            </header>
-
-            <hr>
-
-            <section class="offcanvas-body dashboard-text">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-
-                    <li class="nav-item">
-                        <a class="nav-link active" routerLink="/dashboard">
-                            Dashboard
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/devis">
-                            Devis
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/clients">
-                            Clients
-                        </a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <button class="nav-link dropdown-toggle btn btn-link text-start" type="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Options
-                        </button>
-
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" routerLink="/profil">Profil</a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" routerLink="/settings">Paramètres</a>
-                            </li>
-
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item text-danger" routerLink="/logout">
-                                    Déconnexion
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
-            </section>
-        </aside>
-
-    </section>
+    <div class="d-flex align-items-center gap-2">
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Rechercher..." class="search-input">
+        </div>
+        <button class="btn btn-notification" type="button">
+            <i class="bi bi-bell"></i>
+        </button>
+    </div>
 </nav>

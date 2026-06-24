@@ -1,0 +1,4 @@
+.app-content {
+  margin-left: 270px;
+  transition: margin-left 0.25s ease;
+}
