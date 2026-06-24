@@ -1,28 +1,39 @@
-import { Component, inject, Injectable, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { DashboardService } from '../services/dashboard';
 import { DashboardStats } from '../models/dashboard-stats';
 import { BaseChartDirective } from 'ng2-charts';
+
 import {
   Chart,
-  LineElement, PointElement, LineController,
-  BarElement, BarController,
-  DoughnutController, ArcElement,
-  CategoryScale, LinearScale,
-  Filler, Tooltip, Legend,
-  ChartConfiguration, ChartType
+  LineElement,
+  PointElement,
+  LineController,
+  BarElement,
+  BarController,
+  DoughnutController,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  Filler,
+  Tooltip,
+  Legend,
+  ChartConfiguration,
 } from 'chart.js';
 
-
-
 Chart.register(
-  LineElement, PointElement, LineController,
-  BarElement, BarController,
-  DoughnutController, ArcElement,
-  CategoryScale, LinearScale,
-  Filler, Tooltip, Legend
-
+  LineElement,
+  PointElement,
+  LineController,
+  BarElement,
+  BarController,
+  DoughnutController,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  Filler,
+  Tooltip,
+  Legend
 );
-
 
 @Component({
   selector: 'app-dashboard',
@@ -38,6 +49,13 @@ export class DashboardComponent implements OnInit {
   loading = true;
   errorMessage = '';
 
+  private readonly purple = '#6c5ce7';
+  private readonly purpleLight = 'rgba(108, 92, 231, 0.12)';
+  private readonly warning = '#fdcb6e';
+  private readonly pink = '#fd79a8';
+  private readonly danger = '#d63031';
+  private readonly grey = '#b2bec3';
+
   ngOnInit(): void {
     this.loadStats();
   }
@@ -49,6 +67,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getStats().subscribe({
       next: (data) => {
         this.stats = data;
+        this.updateCharts(data);
         this.loading = false;
       },
       error: () => {
@@ -58,42 +77,49 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // ─── Line Chart ───────────────────────────────────────────────
+  // ─── Line Chart : évolution du CA ─────────────────────────────
+
   lineChartData: ChartConfiguration<'line'>['data'] = {
-    labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+    labels: [],
     datasets: [
       {
-        data: [1200, 1800, 1500, 2200, 1900, 2600],
+        data: [],
         label: 'CA (€)',
         fill: true,
         tension: 0.4,
-        borderColor: '#6c5ce7',
-        backgroundColor: 'rgba(108, 92, 231, 0.1)',
-        pointBackgroundColor: '#6c5ce7',
+        borderColor: this.purple,
+        backgroundColor: this.purpleLight,
+        pointBackgroundColor: this.purple,
       }
     ]
   };
 
   lineChartOptions: ChartConfiguration<'line'>['options'] = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
-      datalabels: { display: false }
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.parsed.y} €`
+        }
+      }
     },
     scales: {
       y: { beginAtZero: true }
     }
   };
 
-  // ─── Bar Chart ────────────────────────────────────────────────
+  // ─── Bar Chart : devis par mois ───────────────────────────────
+
   barChartData: ChartConfiguration<'bar'>['data'] = {
-    labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+    labels: [],
     datasets: [
       {
-        data: [4, 6, 5, 8, 7, 9],
+        data: [],
         label: 'Devis émis',
-        backgroundColor: 'rgba(108, 92, 231, 0.7)',
-        borderColor: '#6c5ce7',
+        backgroundColor: this.purple,
+        borderColor: this.purple,
         borderRadius: 6,
         borderWidth: 1,
       }
@@ -105,25 +131,33 @@ export class DashboardComponent implements OnInit {
     maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
-      datalabels: { display: false }
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.parsed.y} devis`
+        }
+      }
     },
     scales: {
-      y: { beginAtZero: true, ticks: { stepSize: 1 } }
+      y: {
+        beginAtZero: true,
+        ticks: { stepSize: 1 }
+      }
     }
   };
 
-  // ─── Doughnut Chart ───────────────────────────────────────────
+  // ─── Doughnut Chart : répartition des statuts ─────────────────
+
   doughnutChartData: ChartConfiguration<'doughnut'>['data'] = {
     labels: ['Accepté', 'En attente', 'En cours', 'Annulé', 'Refusé'],
     datasets: [
       {
-        data: [12, 5, 3, 2, 1],
+        data: [0, 0, 0, 0, 0],
         backgroundColor: [
-          '#6c5ce7',
-          '#fdcb6e',
-          '#fd79a8',
-          '#d63031',
-          '#b2bec3',
+          this.purple,
+          this.warning,
+          this.pink,
+          this.danger,
+          this.grey,
         ],
         borderWidth: 0,
         hoverOffset: 8,
@@ -131,8 +165,9 @@ export class DashboardComponent implements OnInit {
     ]
   };
 
-  doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] & { plugins?: any } = {
+  doughnutChartOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true,
+    maintainAspectRatio: false,
     cutout: '55%',
     plugins: {
       legend: {
@@ -144,35 +179,96 @@ export class DashboardComponent implements OnInit {
           font: { size: 11 }
         }
       },
-      tooltip: { enabled: true },
+      tooltip: { enabled: true }
     }
   };
 
-  doughnutPlugins = [{
-    id: 'customDatalabels',
-    afterDatasetDraw(chart: any) {
-      const { ctx } = chart;
-      chart.data.datasets.forEach((dataset: any, i: number) => {
-        const meta = chart.getDatasetMeta(i);
-        meta.data.forEach((element: any, index: number) => {
-          const value = dataset.data[index];
-          if (value <= 0) return;
+  // Plugin custom typé en `any[]` pour éviter les conflits de types Chart.js
+  doughnutPlugins: any[] = [
+    {
+      id: 'customDatalabels',
+      afterDatasetsDraw(chart: any): void {
+        const { ctx } = chart;
 
-          const { x, y } = element.tooltipPosition();
-          ctx.save();
-          ctx.fillStyle = '#ffffff';
-          ctx.font = 'bold 12px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(value.toString(), x, y);
-          ctx.restore();
+        chart.data.datasets.forEach((dataset: any, datasetIndex: number) => {
+          const meta = chart.getDatasetMeta(datasetIndex);
+
+          meta.data.forEach((element: any, index: number) => {
+            const value = dataset.data[index];
+
+            if (typeof value !== 'number' || value <= 0) return;
+
+            const position = element.tooltipPosition(true);
+
+            ctx.save();
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 12px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(value.toString(), position.x, position.y);
+            ctx.restore();
+          });
         });
-      });
+      }
     }
-  }];
+  ];
+
+  updateCharts(stats: DashboardStats): void {
+    this.lineChartData = {
+      labels: stats.moisLabels,
+      datasets: [
+        {
+          data: stats.caParMois,
+          label: 'CA (€)',
+          fill: true,
+          tension: 0.4,
+          borderColor: this.purple,
+          backgroundColor: this.purpleLight,
+          pointBackgroundColor: this.purple,
+        }
+      ]
+    };
+
+    this.barChartData = {
+      labels: stats.moisLabels,
+      datasets: [
+        {
+          data: stats.devisParMois,
+          label: 'Devis émis',
+          backgroundColor: this.purple,
+          borderColor: this.purple,
+          borderRadius: 6,
+          borderWidth: 1,
+        }
+      ]
+    };
+
+    this.doughnutChartData = {
+      labels: ['Accepté', 'En attente', 'En cours', 'Annulé', 'Refusé'],
+      datasets: [
+        {
+          data: [
+            stats.devisAcceptes,
+            stats.devisEnAttente,
+            stats.devisEnCours,
+            stats.devisAnnules,
+            stats.devisRefuses
+          ],
+          backgroundColor: [
+            this.purple,
+            this.warning,
+            this.pink,
+            this.danger,
+            this.grey,
+          ],
+          borderWidth: 0,
+          hoverOffset: 8,
+        }
+      ]
+    };
+  }
 
   get totalDevis(): number {
-    return (this.doughnutChartData.datasets[0].data as number[])
-      .reduce((a, b) => a + b, 0);
+    return this.stats?.totalDevis ?? 0;
   }
 }

@@ -10,7 +10,7 @@ import com.whoopstack.devis.service.DashboardService;
 
 @RestController
 @RequestMapping("/api/dashboard")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:4200")
 public class DashboardController {
     private final DashboardService dashboardService;
 

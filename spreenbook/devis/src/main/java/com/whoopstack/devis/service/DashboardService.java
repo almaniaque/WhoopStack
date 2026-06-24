@@ -1,6 +1,11 @@
 package com.whoopstack.devis.service;
 
 import java.util.List;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 
@@ -9,6 +14,7 @@ import com.whoopstack.devis.ressource.DashboardStatsDto;
 
 @Service
 public class DashboardService {
+
     private final ClientService clientService;
     private final DevisService devisService;
 
@@ -26,74 +32,145 @@ public class DashboardService {
         int devisBrouillon = 0;
         int devisEnAttente = 0;
         int devisEnCours = 0;
-        int devisRefuse = 0;
-        int devisAnnule = 0;
+        int devisRefuses = 0;
+        int devisAnnules = 0;
         int devisAcceptes = 0;
 
         double montantTotal = 0.0;
         double montantAccepte = 0.0;
         double montantPotentiel = 0.0;
 
-        for (Devis devis : devisList) {
+        List<String> moisLabels = new ArrayList<>();
+        List<Double> caParMois = new ArrayList<>();
+        List<Integer> devisParMois = new ArrayList<>();
+        YearMonth moisActuel = YearMonth.now();
 
-            if (devis.getMontantTotal() != null) {
-                montantTotal = montantTotal + devis.getMontantTotal();
+        for (int i = 5; i >= 0; i--) {
+            YearMonth mois = moisActuel.minusMonths(i);
+
+            String label = mois.getMonth()
+                    .getDisplayName(TextStyle.SHORT, Locale.FRANCE);
+
+            moisLabels.add(label);
+
+            double caMois = 0.0;
+            int devisMois = 0;
+
+            for (Devis devis : devisList) {
+                LocalDate dateCreation = devis.getDateCreation();
+
+                if (dateCreation == null) {
+                    continue;
+                }
+
+                YearMonth moisDuDevis = YearMonth.from(dateCreation);
+
+                if (!moisDuDevis.equals(mois)) {
+                    continue;
+                }
+
+                devisMois++;
+
+                String statut = devis.getStatut();
+                Double montant = devis.getMontantTotal();
+
+                if ("ACCEPTE".equals(statut) && montant != null) {
+                    caMois += montant;
+                }
             }
+
+            caParMois.add(caMois);
+            devisParMois.add(devisMois);
+        }
+
+        for (Devis devis : devisList) {
+            Double montant = devis.getMontantTotal();
+
+            if (montant != null) {
+                montantTotal += montant;
+            }
+
             String statut = devis.getStatut();
 
             if (statut == null) {
                 continue;
             }
 
-            if (statut.equals("BROUILLON")) {
-                devisBrouillon++;
-            }
+            switch (statut) {
+                case "BROUILLON" -> devisBrouillon++;
 
-            if (statut.equals("REFUSE")) {
-                devisRefuse++;
-            }
+                case "EN_ATTENTE" -> {
+                    devisEnAttente++;
 
-            if (statut.equals("ANNULE")) {
-                devisAnnule++;
-            }
-            if (statut.equals("EN_ATTENTE")) {
-                devisEnAttente++;
+                    if (montant != null) {
+                        montantPotentiel += montant;
+                    }
+                }
 
-                if (devis.getMontantTotal() != null) {
-                    montantPotentiel = montantPotentiel + devis.getMontantTotal();
+                case "EN_COURS" -> {
+                    devisEnCours++;
+
+                    if (montant != null) {
+                        montantPotentiel += montant;
+                    }
+                }
+
+                case "REFUSE" -> devisRefuses++;
+
+                case "ANNULE" -> devisAnnules++;
+
+                case "ACCEPTE" -> {
+                    devisAcceptes++;
+
+                    if (montant != null) {
+                        montantAccepte += montant;
+                    }
+                }
+
+                default -> {
+
                 }
             }
-
-            if (statut.equals("ACCEPTE")) {
-                devisAcceptes++;
-
-                if (devis.getMontantTotal() != null) {
-                    montantAccepte = montantAccepte + devis.getMontantTotal();
-                    montantPotentiel = montantPotentiel + devis.getMontantTotal();
-                }
-            }
-            if (statut.equals("EN_COURS")) {
-                devisEnCours++;
-
-                if (devis.getMontantTotal() != null) {
-                    montantAccepte = montantAccepte + devis.getMontantTotal();
-                    montantPotentiel = montantPotentiel + devis.getMontantTotal();
-                }
-            }
-
         }
+
+        int devisEmis = totalDevis;
+
+        double chiffreAffaires = montantAccepte;
+
+        double tauxConversion = 0.0;
+        if (totalDevis > 0) {
+            tauxConversion = ((double) devisAcceptes / totalDevis) * 100;
+            tauxConversion = Math.round(tauxConversion * 100.0) / 100.0;
+        }
+
+        double delaiMoyenReponse = 0.0;
+        double evolutionChiffreAffaires = 0.0;
+        double evolutionDevis = 0.0;
+        double evolutionConversion = 0.0;
+        double evolutionDelai = 0.0;
 
         return new DashboardStatsDto(
                 totalClients,
                 totalDevis,
+                devisEmis,
                 devisBrouillon,
                 devisEnAttente,
                 devisEnCours,
-                devisRefuse,
-                devisAnnule,
+                devisRefuses,
+                devisAnnules,
                 devisAcceptes,
                 montantTotal,
                 montantAccepte,
-                montantPotentiel);
+                montantPotentiel,
+                chiffreAffaires,
+                tauxConversion,
+                delaiMoyenReponse,
+                evolutionChiffreAffaires,
+                evolutionDevis,
+                evolutionConversion,
+                evolutionDelai,
+                moisLabels,
+                caParMois,
+                devisParMois);
     }
 }

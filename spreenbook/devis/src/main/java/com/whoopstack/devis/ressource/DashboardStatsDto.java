@@ -1,39 +1,69 @@
 package com.whoopstack.devis.ressource;
 
+import java.util.List;
+
 public class DashboardStatsDto {
 
     private int totalClients;
     private int totalDevis;
 
+    private int devisEmis;
     private int devisBrouillon;
     private int devisEnAttente;
     private int devisEnCours;
-    private int devisRefuse;
-    private int devisAnnule;
+    private int devisRefuses;
+    private int devisAnnules;
     private int devisAcceptes;
 
     private double montantTotal;
     private double montantAccepte;
     private double montantPotentiel;
 
-    public DashboardStatsDto() {
+    private double chiffreAffaires;
+    private double tauxConversion;
+    private double delaiMoyenReponse;
 
-    }
+    private double evolutionChiffreAffaires;
+    private double evolutionDevis;
+    private double evolutionConversion;
+    private double evolutionDelai;
 
-    public DashboardStatsDto(int totalClients, int totalDevis, int devisBrouillon, int devisEnAttente, int devisEnCours,
-            int devisRefuse, int devisAnnule, int devisAcceptes, double montantTotal, double montantAccepte,
-            double montantPotentiel) {
+    private List<String> moisLabels;
+    private List<Double> caParMois;
+    private List<Integer> devisParMois;
+
+    public DashboardStatsDto(int totalClients, int totalDevis, int devisEmis, int devisBrouillon, int devisEnAttente,
+            int devisEnCours, int devisRefuses, int devisAnnules, int devisAcceptes, double montantTotal,
+            double montantAccepte, double montantPotentiel, double chiffreAffaires, double tauxConversion,
+            double delaiMoyenReponse, double evolutionChiffreAffaires, double evolutionDevis,
+            double evolutionConversion, double evolutionDelai, List<String> moisLabels, List<Double> caParMois,
+            List<Integer> devisParMois) {
         this.totalClients = totalClients;
         this.totalDevis = totalDevis;
+        this.devisEmis = devisEmis;
         this.devisBrouillon = devisBrouillon;
         this.devisEnAttente = devisEnAttente;
         this.devisEnCours = devisEnCours;
-        this.devisRefuse = devisRefuse;
-        this.devisAnnule = devisAnnule;
+        this.devisRefuses = devisRefuses;
+        this.devisAnnules = devisAnnules;
         this.devisAcceptes = devisAcceptes;
         this.montantTotal = montantTotal;
         this.montantAccepte = montantAccepte;
         this.montantPotentiel = montantPotentiel;
+        this.chiffreAffaires = chiffreAffaires;
+        this.tauxConversion = tauxConversion;
+        this.delaiMoyenReponse = delaiMoyenReponse;
+        this.evolutionChiffreAffaires = evolutionChiffreAffaires;
+        this.evolutionDevis = evolutionDevis;
+        this.evolutionConversion = evolutionConversion;
+        this.evolutionDelai = evolutionDelai;
+        this.moisLabels = moisLabels;
+        this.caParMois = caParMois;
+        this.devisParMois = devisParMois;
+    }
+
+    public DashboardStatsDto() {
+
     }
 
     public int getTotalClients() {
@@ -50,6 +80,14 @@ public class DashboardStatsDto {
 
     public void setTotalDevis(int totalDevis) {
         this.totalDevis = totalDevis;
+    }
+
+    public int getDevisEmis() {
+        return devisEmis;
+    }
+
+    public void setDevisEmis(int devisEmis) {
+        this.devisEmis = devisEmis;
     }
 
     public int getDevisBrouillon() {
@@ -76,20 +114,20 @@ public class DashboardStatsDto {
         this.devisEnCours = devisEnCours;
     }
 
-    public int getDevisRefuse() {
-        return devisRefuse;
+    public int getDevisRefuses() {
+        return devisRefuses;
     }
 
-    public void setDevisRefuse(int devisRefuse) {
-        this.devisRefuse = devisRefuse;
+    public void setDevisRefuses(int devisRefuses) {
+        this.devisRefuses = devisRefuses;
     }
 
-    public int getDevisAnnule() {
-        return devisAnnule;
+    public int getDevisAnnules() {
+        return devisAnnules;
     }
 
-    public void setDevisAnnule(int devisAnnule) {
-        this.devisAnnule = devisAnnule;
+    public void setDevisAnnules(int devisAnnules) {
+        this.devisAnnules = devisAnnules;
     }
 
     public int getDevisAcceptes() {
@@ -122,6 +160,86 @@ public class DashboardStatsDto {
 
     public void setMontantPotentiel(double montantPotentiel) {
         this.montantPotentiel = montantPotentiel;
+    }
+
+    public double getChiffreAffaires() {
+        return chiffreAffaires;
+    }
+
+    public void setChiffreAffaires(double chiffreAffaires) {
+        this.chiffreAffaires = chiffreAffaires;
+    }
+
+    public double getTauxConversion() {
+        return tauxConversion;
+    }
+
+    public void setTauxConversion(double tauxConversion) {
+        this.tauxConversion = tauxConversion;
+    }
+
+    public double getDelaiMoyenReponse() {
+        return delaiMoyenReponse;
+    }
+
+    public void setDelaiMoyenReponse(double delaiMoyenReponse) {
+        this.delaiMoyenReponse = delaiMoyenReponse;
+    }
+
+    public double getEvolutionChiffreAffaires() {
+        return evolutionChiffreAffaires;
+    }
+
+    public void setEvolutionChiffreAffaires(double evolutionChiffreAffaires) {
+        this.evolutionChiffreAffaires = evolutionChiffreAffaires;
+    }
+
+    public double getEvolutionDevis() {
+        return evolutionDevis;
+    }
+
+    public void setEvolutionDevis(double evolutionDevis) {
+        this.evolutionDevis = evolutionDevis;
+    }
+
+    public double getEvolutionConversion() {
+        return evolutionConversion;
+    }
+
+    public void setEvolutionConversion(double evolutionConversion) {
+        this.evolutionConversion = evolutionConversion;
+    }
+
+    public double getEvolutionDelai() {
+        return evolutionDelai;
+    }
+
+    public void setEvolutionDelai(double evolutionDelai) {
+        this.evolutionDelai = evolutionDelai;
+    }
+
+    public List<String> getMoisLabels() {
+        return moisLabels;
+    }
+
+    public void setMoisLabels(List<String> moisLabels) {
+        this.moisLabels = moisLabels;
+    }
+
+    public List<Double> getCaParMois() {
+        return caParMois;
+    }
+
+    public void setCaParMois(List<Double> caParMois) {
+        this.caParMois = caParMois;
+    }
+
+    public List<Integer> getDevisParMois() {
+        return devisParMois;
+    }
+
+    public void setDevisParMois(List<Integer> devisParMois) {
+        this.devisParMois = devisParMois;
     }
 
 }

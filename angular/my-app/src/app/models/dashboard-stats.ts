@@ -1,6 +1,20 @@
 export interface DashboardStats {
-    chiffreAffaires: number;
+    totalClients: number;
+    totalDevis: number;
+
     devisEmis: number;
+    devisBrouillon: number;
+    devisEnAttente: number;
+    devisEnCours: number;
+    devisRefuses: number;
+    devisAnnules: number;
+    devisAcceptes: number;
+
+    montantTotal: number;
+    montantAccepte: number;
+    montantPotentiel: number;
+
+    chiffreAffaires: number;
     tauxConversion: number;
     delaiMoyenReponse: number;
 
@@ -9,9 +23,7 @@ export interface DashboardStats {
     evolutionConversion: number;
     evolutionDelai: number;
 
-    acceptes: number;
-    enAttente: number;
-    enCours: number;
-    annules: number;
-    refuses: number;
+    moisLabels: string[];
+    caParMois: number[];
+    devisParMois: number[];
 }
