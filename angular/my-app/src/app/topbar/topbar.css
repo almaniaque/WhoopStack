@@ -116,7 +116,7 @@
 }
 
 .topbar {
-  background: linear-gradient(135deg, #5a4ec7 20%, #2d2660 80%);
+  background: linear-gradient(135deg, #5a4ec7 0%, #2d2660 70%);
   border-bottom: 1px solid #eee;
 }
 
