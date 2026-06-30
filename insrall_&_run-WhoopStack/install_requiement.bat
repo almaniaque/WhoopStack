@@ -98,6 +98,9 @@ echo ========================================
 echo Installation du frontend Angular...
 echo ========================================
 
+echo Installation de Node.js LTS...
+winget install OpenJS.NodeJS.LTS --accept-package-agreements --accept-source-agreements
+
 cd /d "%~dp0..\frontend\angular\my-app"
 
 call npm install
