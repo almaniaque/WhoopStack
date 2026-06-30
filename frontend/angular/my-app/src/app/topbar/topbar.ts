@@ -2,13 +2,15 @@ import { Component, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '../auth/core/services/auth.service';
+import { Parametres } from './parametre/parametres';
 
 
 
 @Component({
   selector: 'app-topbar',
-  imports: [RouterLink, RouterLinkActive, MatMenuModule],
+  imports: [RouterLink, RouterLinkActive, MatMenuModule, MatDialogModule],
   templateUrl: './topbar.html',
   styleUrl: './topbar.css',
 })
@@ -35,7 +37,7 @@ export class Topbar {
   }
 
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private dialog: MatDialog) {
     // Lit l'URL déjà active dès la création du composant
     const initialUrl = this.router.url.split('?')[0];
     this.currentPage.set(this.pageLabels[initialUrl] ?? '');
@@ -59,6 +61,19 @@ export class Topbar {
     this.isOpen.set(false);
   }
 
+  ouvrirParametres() {
+    const dialogRef = this.dialog.open(Parametres, {
+      width: '560px',
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(resultat => {
+      if (resultat) {
+        console.log('Profil sauvegardé :', resultat.profil);
+        console.log('Préférences sauvegardées :', resultat.preferences);
+      }
+    });
+  }
   logout() {
     this.authService.logout();
   }

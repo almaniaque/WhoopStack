@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'; // Gère l'interrupteur on/off
 import { MatSelectModule } from '@angular/material/select'; // Gère les listes déroulantes
 import { FormsModule } from '@angular/forms'; // Liaison entre champs et données
+import { ChangePasswordComponent } from '../../auth/change-password/change-password.component';
+
 
 @Component({
   selector: 'app-parametres',
@@ -18,7 +20,8 @@ import { FormsModule } from '@angular/forms'; // Liaison entre champs et donnée
     MatButtonModule,
     MatSlideToggleModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    ChangePasswordComponent,
   ],
   templateUrl: './parametres.html',
   styleUrl: './parametres.css',

@@ -4,7 +4,7 @@ import {
   ReactiveFormsModule, FormBuilder, FormGroup,
   Validators, AbstractControl, ValidationErrors
 } from '@angular/forms';
-import { RouterLink, Router } from '@angular/router';
+
 import { AuthService, UpdatePasswordRequest } from '../core/services/auth.service';
 
 function passwordsMatch(control: AbstractControl): ValidationErrors | null {
@@ -17,7 +17,7 @@ function passwordsMatch(control: AbstractControl): ValidationErrors | null {
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })
@@ -36,7 +36,7 @@ export class ChangePasswordComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+
   ) {
     this.form = this.fb.group({
       currentPassword: ['', [Validators.required, Validators.minLength(6)]],

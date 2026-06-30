@@ -1,16 +1,72 @@
-@echo off
-title Installation de WhoopStack
+echo ========================================
+echo Installation de WhoopStack
+echo ========================================
+echo.
 
-cd /d "%~dp0.."
+echo Verification de Java...
 
-echo Installation MySQL Server...
-winget install Oracle.MySQL --accept-package-agreements --accept-source-agreements
+java -version >nul 2>&1
+if errorlevel 1 (
+    echo Java n'est pas installe ou pas detecte.
+    echo Installation automatique de Java 21 avec Eclipse Temurin...
+    echo.
 
-echo Installation MySQL Workbench...
-winget install Oracle.MySQLWorkbench --accept-package-agreements --accept-source-agreements
+    winget install EclipseAdoptium.Temurin.21.JDK --silent --accept-package-agreements --accept-source-agreements
 
-echo Installation du backend SpringBoot...
-cd backend\springboot\devis
+    if errorlevel 1 (
+        echo.
+        echo ERREUR: impossible d'installer Java automatiquement.
+        echo Verifiez que winget est disponible sur ce PC.
+        echo Commande de test:
+        echo winget --version
+        pause
+        exit /b 1
+    )
+) else (
+    echo Java est deja installe.
+)
+
+echo.
+echo Configuration de JAVA_HOME...
+
+set "JAVA_HOME_CANDIDATE="
+
+for /d %%D in ("C:\Program Files\Eclipse Adoptium\jdk-21*") do (
+    set "JAVA_HOME_CANDIDATE=%%D"
+)
+
+if "%JAVA_HOME_CANDIDATE%"=="" (
+    for /d %%D in ("C:\Program Files\Java\jdk-21*") do (
+        set "JAVA_HOME_CANDIDATE=%%D"
+    )
+)
+
+if "%JAVA_HOME_CANDIDATE%"=="" (
+    echo ERREUR: JDK installe mais dossier introuvable.
+    echo Verifiez dans C:\Program Files\Eclipse Adoptium\
+    pause
+    exit /b 1
+)
+
+setx JAVA_HOME "%JAVA_HOME_CANDIDATE%" >nul
+set "JAVA_HOME=%JAVA_HOME_CANDIDATE%"
+set "PATH=%JAVA_HOME%\bin;%PATH%"
+
+echo JAVA_HOME configure sur:
+echo %JAVA_HOME%
+echo.
+
+echo Verification finale de Java...
+java -version
+javac -version
+
+echo.
+echo ========================================
+echo Installation du backend Spring Boot...
+echo ========================================
+
+cd /d "%~dp0..\backend\springboot\devis"
+
 call mvnw.cmd clean install
 
 if errorlevel 1 (
@@ -20,26 +76,24 @@ if errorlevel 1 (
     exit /b 1
 )
 
-cd /d "%~dp0.."
+echo.
+echo ========================================
+echo Installation du frontend Angular...
+echo ========================================
 
-echo Installation du Frontend Angular...
-cd frontend\angular\my-app
+cd /d "%~dp0..\frontend\angular\my-app"
 
-echo Installation des dependances Angular...
-call npm install bootstrap bootstrap-icons chartjs-plugin-datalabels chart.js ng2-charts jspdf html2canvas
+call npm install
 
-echo Installation des dependances de dev Angular...
-call npm install --save-dev --save-exact @types/node@20
-call npm install --save-dev @types/mocha vitest
-call npm install --save-dev @types/jasmine
+if errorlevel 1 (
+    echo.
+    echo ERREUR frontend.
+    pause
+    exit /b 1
+)
 
-echo Installation Angular globale CLI...
-call npm install -g @angular/cli
-
-echo Installation Angular Material...
-call ng add @angular/material
-
-cd /d "%~dp0.."
-
-echo Installation terminee
+echo.
+echo ========================================
+echo Installation terminee avec succes.
+echo ========================================
 pause
