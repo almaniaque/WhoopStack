@@ -1,15 +1,17 @@
 @echo off
 title Installation de WhoopStack
 
-echo Installation du backend Spring-Boot...
+cd /d "%~dp0.."
+
+echo Installation du backend SpringBoot...
 cd backend/springboot/devis
-call mvn clean install
-cd ..
+call mvnw.cmd clean install
+cd /d "%~dp0.."
 
 echo Installation du Frontend Angular
 cd frontend/angular/my-app
 call npm install
-cd ..
+cd /d "%~dp0.."
 
 echo Installation terminee
 pause
