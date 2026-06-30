@@ -84,7 +84,7 @@ echo ========================================
 
 cd /d "%~dp0..\backend\springboot\devis"
 
-call mvnw.cmd clean package -DskipTests
+call mvnw.cmd clean package -Dmaven.test.skip=true
 
 if errorlevel 1 (
     echo.
