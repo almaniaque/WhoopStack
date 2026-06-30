@@ -3,7 +3,11 @@ echo Installation de WhoopStack
 echo ========================================
 echo.
 
+
+echo ========================================
 echo Verification de Java...
+echo ========================================
+echo.
 
 java -version >nul 2>&1
 if errorlevel 1 (
@@ -59,6 +63,19 @@ echo.
 echo Verification finale de Java...
 java -version
 javac -version
+
+echo.
+echo ========================================
+echo Installation de MySQL
+echo ========================================
+
+cd /d "%~dp0.."
+
+echo Installation MySQL Server...
+winget install Oracle.MySQL --accept-package-agreements --accept-source-agreements
+
+echo Installation MySQL Workbench...
+winget install Oracle.MySQLWorkbench --accept-package-agreements --accept-source-agreements
 
 echo.
 echo ========================================
