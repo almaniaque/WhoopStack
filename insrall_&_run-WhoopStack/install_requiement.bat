@@ -140,7 +140,7 @@ call npm install bootstrap bootstrap-icons chartjs-plugin-datalabels chart.js ng
 call npm install --save-dev --save-exact @types/node@20
 call npm install --save-dev @types/mocha vitest
 call npm install -g @angular/cli
-call ng add @angular/material
+call npx ng add @angular/material
 
 if errorlevel 1 (
     echo.
