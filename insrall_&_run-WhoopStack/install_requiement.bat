@@ -3,6 +3,12 @@ title Installation de WhoopStack
 
 cd /d "%~dp0.."
 
+echo Installation MySQL Server...
+winget install Oracle.MySQL --accept-package-agreements --accept-source-agreements
+
+echo Installation MySQL Workbench...
+winget install Oracle.MySQLWorkbench --accept-package-agreements --accept-source-agreements
+
 echo Installation du backend SpringBoot...
 cd backend\springboot\devis
 call mvnw.cmd clean install
