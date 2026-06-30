@@ -11,8 +11,6 @@
   z-index: 1040;
 }
 
-/* laisse de la place pour le bouton toggle */
-
 .sidebar.sidebar-closed {
   margin-left: -270px;
 }
@@ -21,6 +19,8 @@
   margin-left: 270px;
   width: calc(100% - 270px);
   transition: margin-left 0.25s ease, width 0.25s ease;
+  background: linear-gradient(135deg, #5a4ec7 0%, #2d2660 70%);
+  border-bottom: 1px solid #eee;
 }
 
 .topbar.topbar-expanded {
@@ -115,11 +115,6 @@
   color: #8b85b8;
 }
 
-.topbar {
-  background: linear-gradient(135deg, #5a4ec7 0%, #2d2660 70%);
-  border-bottom: 1px solid #eee;
-}
-
 .topbar-title {
   font-size: 1.4rem;
   font-weight: 600;
@@ -161,4 +156,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* ✅ Style du menu Angular Material pour correspondre à la sidebar */
+::ng-deep .mat-mdc-menu-panel {
+  background-color: #1a1260 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  min-width: 200px !important;
+}
+
+::ng-deep .mat-mdc-menu-item {
+  color: #b8b3d9 !important;
+  font-size: 0.9rem !important;
+}
+
+::ng-deep .mat-mdc-menu-item:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: white !important;
 }

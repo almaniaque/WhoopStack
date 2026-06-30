@@ -6,12 +6,14 @@
 <!-- Sidebar -->
 <div class="sidebar" [class.sidebar-closed]="!isOpen()">
     <div class="d-flex flex-column h-100">
+
         <!-- Logo -->
         <div class="sidebar-logo d-flex flex-column align-items-center p-1">
             <img src="image/WhoopStackLogo.png" alt="WhoopStack" class="logo-image">
             <img src="image/WhoopStackText.png" alt="WhoopStack" class="logo-text">
         </div>
         <hr>
+
         <!-- Navigation -->
         <div class="px-3 mt-3">
             <div class="nav-section-title">NAVIGATION</div>
@@ -31,26 +33,36 @@
             </nav>
         </div>
 
-        <!-- Bas de sidebar -->
-        <div class="mt-auto">
-            <div class="px-3 py-2">
-                <a class="nav-link" routerLink="/parametres">
-                    <i class="bi bi-gear"></i> Paramètres
+        <!-- Bas de sidebar : menu Paramètres -->
+        <div class="px-3 py-2 mt-auto">
+            <a class="nav-link" role="button" [matMenuTriggerFor]="settingsMenu">
+                <i class="bi bi-gear"></i> Paramètres
+                <i class="bi bi-chevron-up ms-1"></i>
+            </a>
+
+            <mat-menu #settingsMenu="matMenu" yPosition="above">
+                <a mat-menu-item (click)="ouvrirParametres()">
+                    <i class="bi bi-sliders me-2"></i> Paramètres généraux
                 </a>
-            </div>
-            <div class="user-profile d-flex align-items-center gap-2 p-3">
-                <div class="avatar">LD</div>
-                <div>
-                    <div class="user-name">Laurent Dumas</div>
-                    <div class="user-role">Admin</div>
-                </div>
+                <a mat-menu-item>
+                    <i class="bi bi-box-arrow-right me-2"></i> Déconnexion
+                </a>
+            </mat-menu>
+        </div>
+
+        <!-- Profil utilisateur -->
+        <div class="user-profile d-flex align-items-center gap-2 p-3">
+            <div class="avatar">LD</div>
+            <div>
+                <div class="user-name">Laurent Dumas</div>
+                <div class="user-role">Admin</div>
             </div>
         </div>
+
     </div>
 </div>
-<!-- ↑ .sidebar se ferme ICI maintenant -->
 
-<!-- Topbar : maintenant en dehors de .sidebar -->
+<!-- Topbar -->
 <nav class="topbar d-flex justify-content-between align-items-center px-4 py-3" [class.topbar-expanded]="!isOpen()">
     <div>
         <h1 class="topbar-title mb-0">Accueil</h1>

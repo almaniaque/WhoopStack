@@ -1,0 +1,126 @@
+<div class="modal-container">
+
+  <!-- Header -->
+  <div class="modal-header">
+    <h2 mat-dialog-title>
+      <i class="bi bi-gear me-2"></i> Paramètres
+    </h2>
+  </div>
+
+  <!-- Contenu -->
+  <mat-dialog-content>
+
+    <mat-tab-group> <!-- crée les onglets -->
+
+      <mat-tab label="Profil">
+        <div class="tab-content">
+
+          <!-- Avatar -->
+          <div class="avatar-section">
+            <div class="avatar-large">LD</div>
+            <button mat-stroked-button>Changer la photo</button>
+          </div>
+
+          <!-- Champs -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nom complet</mat-label>
+            <input matInput [(ngModel)]="profil.nom">
+            <!-- [(ngModel)]="profil.nom" Lie le champ directement à l'objet profil-->
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" [(ngModel)]="profil.email">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Téléphone</mat-label>
+            <input matInput [(ngModel)]="profil.telephone">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Rôle</mat-label>
+            <input matInput [(ngModel)]="profil.role" [disabled]="true">
+            <mat-hint>Le rôle ne peut pas être modifié ici</mat-hint>
+          </mat-form-field>
+
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Préférences">
+        <div class="tab-content">
+
+          <!-- Notifications -->
+          <div class="preference-item">
+            <div>
+              <div class="preference-label">Notifications</div>
+              <div class="preference-desc">Recevoir les alertes en temps réel</div>
+            </div>
+            <mat-slide-toggle [(ngModel)]="preferences.notifications"></mat-slide-toggle>
+          </div>
+
+          <!-- Emails -->
+          <div class="preference-item">
+            <div>
+              <div class="preference-label">Résumé par email</div>
+              <div class="preference-desc">Recevoir un résumé quotidien par email</div>
+            </div>
+            <mat-slide-toggle [(ngModel)]="preferences.emailsResume"></mat-slide-toggle>
+          </div>
+
+          <!-- Langue -->
+          <mat-form-field appearance="outline" class="full-width mt-3">
+            <mat-label>Langue</mat-label>
+            <mat-select [(ngModel)]="preferences.langue">
+              <mat-option value="fr">Français</mat-option>
+              <mat-option value="en">English</mat-option>
+              <mat-option value="es">Español</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Thème -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Thème</mat-label>
+            <mat-select [(ngModel)]="preferences.theme">
+              <mat-option value="clair">Clair</mat-option>
+              <mat-option value="sombre">Sombre</mat-option>
+              <mat-option value="systeme">Système</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Sécurité">
+        <div class="tab-content">
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Mot de passe actuel</mat-label>
+            <input matInput type="password">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nouveau mot de passe</mat-label>
+            <input matInput type="password">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Confirmer le mot de passe</mat-label>
+            <input matInput type="password">
+          </mat-form-field>
+
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </mat-dialog-content>
+
+  <!-- Footer -->
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close>Annuler</button>
+    <button mat-flat-button color="primary" (click)="sauvegarder()">Sauvegarder</button>
+  </mat-dialog-actions>
+
+
+
+</div>
