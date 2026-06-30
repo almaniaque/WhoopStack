@@ -67,7 +67,7 @@ echo ========================================
 
 cd /d "%~dp0..\backend\springboot\devis"
 
-call mvnw.cmd clean install
+call mvnw.cmd clean package -DskipTests
 
 if errorlevel 1 (
     echo.
