@@ -1,13 +1,15 @@
 @echo off
 title WhoopStack
 
+cd /d "%~dp0.."
+
 echo Demarrage du Backend...
-start cmd /k "cd backend/springboot/devis && mvn spring-boot:run"
+start cmd /k "cd /d backend/springboot/devis && .\mvnw spring-boot:run"
 
 timeout /t 5 > nul
 
 echo Demarrage du Frontend...
-start cmd /k "cd frontend/angular && ng serve --open"
+start cmd /k "cd /d frontend/angular/my-app && ng serve --open"
 
 echo WhoopStack en cours de lancement
 pause

@@ -3,11 +3,11 @@ title Installation de WhoopStack
 
 echo Installation du backend Spring-Boot...
 cd backend/springboot/devis
-call mvn clean install
+call .\mvnw clean install
 cd ..
 
 echo Installation du Frontend Angular
-cd frontend/angular
+cd frontend/angular/my-app
 call npm install
 cd ..
 
