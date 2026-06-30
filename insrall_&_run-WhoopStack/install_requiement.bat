@@ -31,6 +31,7 @@ call npm install bootstrap bootstrap-icons chartjs-plugin-datalabels chart.js ng
 echo Installation des dependances de dev Angular...
 call npm install --save-dev --save-exact @types/node@20
 call npm install --save-dev @types/mocha vitest
+call npm install --save-dev @types/jasmine
 
 echo Installation Angular globale CLI...
 call npm install -g @angular/cli
