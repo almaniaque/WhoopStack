@@ -9,7 +9,7 @@ start cmd /k "cd /d backend/springboot/devis && .\mvnw spring-boot:run"
 timeout /t 5 > nul
 
 echo Demarrage du Frontend...
-start cmd /k "cd /d frontend/angular/my-app && ng serve --open"
+start cmd /k "cd /d frontend/angular/my-app && npx ng serve --open"
 
 echo WhoopStack en cours de lancement
 pause

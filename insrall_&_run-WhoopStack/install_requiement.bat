@@ -66,16 +66,48 @@ javac -version
 
 echo.
 echo ========================================
-echo Installation de MySQL
+echo Installation et configuration de MySQL
 echo ========================================
 
 cd /d "%~dp0.."
 
-echo Installation MySQL Server...
-winget install Oracle.MySQL --accept-package-agreements --accept-source-agreements
+set "MYSQL_EXE="
 
-echo Installation MySQL Workbench...
+for /f "delims=" %%i in ('dir "C:\Program Files\MySQL\mysql.exe" /s /b 2^>nul ^| findstr /i "MySQL Server.*bin"') do (
+    set "MYSQL_EXE=%%i"
+)
+
+if "%MYSQL_EXE%"=="" (
+    echo MySQL Server introuvable. Installation...
+    winget install Oracle.MySQL --accept-package-agreements --accept-source-agreements
+)
+
 winget install Oracle.MySQLWorkbench --accept-package-agreements --accept-source-agreements
+
+for /f "delims=" %%i in ('dir "C:\Program Files\MySQL\mysql.exe" /s /b 2^>nul ^| findstr /i "MySQL Server.*bin"') do (
+    set "MYSQL_EXE=%%i"
+)
+
+if "%MYSQL_EXE%"=="" (
+    echo ERREUR : MySQL Server reste introuvable.
+    pause
+    exit /b 1
+)
+
+for %%i in ("%MYSQL_EXE%") do set "MYSQL_BIN=%%~dpi"
+
+setx PATH "%PATH%;%MYSQL_BIN%" >nul
+
+echo Creation de la base whoopstack...
+"%MYSQL_EXE%" -u root -p -e "CREATE DATABASE IF NOT EXISTS whoopstack CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+if errorlevel 1 (
+    echo.
+    echo ERREUR MySQL : mot de passe root incorrect, service MySQL arrete, ou configuration incomplete.
+    pause
+    exit /b 1
+)
+
 
 echo.
 echo ========================================
@@ -104,6 +136,11 @@ winget install OpenJS.NodeJS.LTS --accept-package-agreements --accept-source-agr
 cd /d "%~dp0..\frontend\angular\my-app"
 
 call npm install
+call npm install bootstrap bootstrap-icons chartjs-plugin-datalabels chart.js ng2-charts jspdf html2canvas
+call npm install --save-dev --save-exact @types/node@20
+call npm install --save-dev @types/mocha vitest
+call npm install -g @angular/cli
+call ng add @angular/material
 
 if errorlevel 1 (
     echo.
@@ -111,6 +148,9 @@ if errorlevel 1 (
     pause
     exit /b 1
 )
+
+
+cd /d "%~dp0.."
 
 echo.
 echo ========================================
